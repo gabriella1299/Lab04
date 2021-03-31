@@ -6,6 +6,8 @@ package it.polito.tdp.lab04;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import it.polito.tdp.lab04.model.Model;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -14,7 +16,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 public class FXMLController {
-
+	
+	private Model model;
+	
     @FXML
     private ResourceBundle resources;
 
@@ -63,7 +67,11 @@ public class FXMLController {
     void doReset(ActionEvent event) {
 
     }
-
+    
+    public void setModel (Model model) {
+   	 this.model=model;
+    }
+    
     @FXML
     void initialize() {
         assert menuCorsi != null : "fx:id=\"menuCorsi\" was not injected: check your FXML file 'Scene.fxml'.";
