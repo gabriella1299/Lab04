@@ -5,6 +5,7 @@
 package it.polito.tdp.lab04;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import it.polito.tdp.lab04.model.Model;
@@ -55,7 +56,34 @@ public class FXMLController {
 
     @FXML
     void doCheck(ActionEvent event) {
-
+    	String matricolaString=txtMatricola.getText();
+    	Integer matricola = null;
+    	List<String> studente;
+    	
+    	try {
+    		
+    		matricola=Integer.parseInt(matricolaString);
+    		studente=this.model.getNomeCognome(matricola);
+    		
+        	txtNome.setText(studente.get(0));
+        	txtCognome.setText(studente.get(1));
+        	
+    	} catch(NumberFormatException nfe) {
+    		txtRisultato.setText("Inserire un numero intero per la matricola!");
+    		txtMatricola.clear();
+    		return;
+    	} catch(NullPointerException npe) {
+    		txtRisultato.setText("Devi inserire una matricola!");
+    		txtMatricola.clear();
+    		return;
+    	} catch(RuntimeException re) {
+    		txtRisultato.setText("Devi inserire una matricola valida!");
+    		txtMatricola.clear();
+    		return;
+    	} 
+    	
+    	
+    	
     }
 
     @FXML
