@@ -2,9 +2,8 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
@@ -22,35 +21,17 @@
    <center>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                <children>
                   <Label text="Corso:">
                      <HBox.margin>
                         <Insets bottom="6.0" left="6.0" right="20.0" />
                      </HBox.margin>
                   </Label>
-                  <MenuButton fx:id="menuCorsi" mnemonicParsing="false" text="Corsi">
-                    <items>
-                      <MenuItem mnemonicParsing="false" text="Gestione dell'innovazione e sviluppo prodotto" />
-                      <MenuItem mnemonicParsing="false" text="Gestione dell'innovazione e sviluppo prodotto ICT" />
-                        <MenuItem mnemonicParsing="false" text="Ingegneria della qualità" />
-                        <MenuItem mnemonicParsing="false" text="Strategia, tecnologia e marketing" />
-                        <MenuItem mnemonicParsing="false" text="Economia e finanza d'impresa" />
-                        <MenuItem mnemonicParsing="false" text="Analisi e gestione dei sistemi produttivi" />
-                        <MenuItem mnemonicParsing="false" text="Analisi finanziaria e creditizia per l'impresa" />
-                        <MenuItem mnemonicParsing="false" text="Diritto commerciale" />
-                        <MenuItem mnemonicParsing="false" text="Economia dei sistemi industriali" />
-                        <MenuItem mnemonicParsing="false" text="Sistemi informativi aziendali" />
-                        <MenuItem mnemonicParsing="false" text="Analisi dei sistemi economici" />
-                        <MenuItem mnemonicParsing="false" text="Economia aziendale 09AQGNG" />
-                        <MenuItem mnemonicParsing="false" text="Economia aziendale 09AQGPG" />
-                        <MenuItem mnemonicParsing="false" text="Gestione dei progetti" />
-                        <MenuItem mnemonicParsing="false" text="Nessun corso" />
-                    </items>
-                  </MenuButton>
+                  <ComboBox fx:id="cmbCorsi" prefWidth="150.0" promptText="Corsi" />
                </children>
             </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                <children>
                   <Button mnemonicParsing="false" onAction="#doCercaIscritti" text="Cerca iscritti corso">
                      <HBox.margin>
@@ -61,7 +42,7 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label text="Studente">
+                  <Label text="Studente" HBox.hgrow="ALWAYS">
                      <HBox.margin>
                         <Insets left="6.0" right="20.0" />
                      </HBox.margin>
@@ -87,32 +68,32 @@
                   <Insets />
                </opaqueInsets>
             </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="100.0">
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" VBox.vgrow="ALWAYS">
                <children>
-                  <Button mnemonicParsing="false" onAction="#doCercaCorsi" text="Cerca corsi">
+                  <Button mnemonicParsing="false" onAction="#doCercaCorsi" text="Cerca corsi" HBox.hgrow="ALWAYS">
                      <HBox.margin>
                         <Insets left="6.0" />
                      </HBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#doIscrivi" text="Iscrivi">
+                  <Button mnemonicParsing="false" onAction="#doIscrivi" text="Iscrivi" HBox.hgrow="ALWAYS">
                      <HBox.margin>
-                        <Insets left="450.0" />
+                        <Insets left="460.0" />
                      </HBox.margin>
                   </Button>
                </children>
             </HBox>
-            <HBox>
+            <HBox VBox.vgrow="ALWAYS">
                <children>
-                  <TextArea fx:id="txtRisultato" editable="false" prefHeight="37.0" prefWidth="606.0">
+                  <TextArea fx:id="txtRisultato" editable="false" HBox.hgrow="ALWAYS">
                      <HBox.margin>
                         <Insets left="6.0" right="6.0" />
                      </HBox.margin>
                   </TextArea>
                </children>
             </HBox>
-            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                <children>
-                  <Button fx:id="btnReset" mnemonicParsing="false" onAction="#doReset" text="Reset">
+                  <Button fx:id="btnReset" mnemonicParsing="false" onAction="#doReset" text="Reset" HBox.hgrow="ALWAYS">
                      <HBox.margin>
                         <Insets right="6.0" />
                      </HBox.margin>
