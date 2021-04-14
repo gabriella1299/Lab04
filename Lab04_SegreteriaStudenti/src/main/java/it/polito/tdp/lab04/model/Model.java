@@ -17,7 +17,7 @@ public class Model {
 		
 	}
 	
-	public List<String> getNomeCognome(Integer matricola) {
+	public Studente getNomeCognome(Integer matricola) {
 		return studenteDao.getNomeCognome(matricola);
 	}
 	
@@ -60,6 +60,9 @@ public class Model {
 		}
 		return false;
 	}
+	public boolean isStudenteIscrittoACorso(Studente studente, Corso corso) {//uguale a sopra ma fatto cosi è meglio
+		return studenteDao.isStudenteIscrittoACorso(studente,corso);
+	}
 
 	public boolean esisteMatricola(Integer matricola) {
 		return studenteDao.esisteMatricola(matricola);
@@ -68,6 +71,10 @@ public class Model {
 	public boolean corsoConIscritti(String codins) {
 		
 		return corsoDao.corsoConIscritti(codins);
+	}
+	
+	public boolean inscriviStudenteACorso(Studente studente, Corso corso) {
+		return corsoDao.inscriviStudenteACorso(studente, corso);
 	}
 
 	

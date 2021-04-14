@@ -53,6 +53,7 @@ public class FXMLController {
  
     @FXML
     void doCercaCorsi(ActionEvent event) {
+    	txtRisultato.clear();
     	String matricolaString=txtMatricola.getText();
     	Integer matricola = null;
     	
@@ -84,19 +85,72 @@ public class FXMLController {
     	}
     	
     }
+    /*@FXML
+    void doCercaCorsi(ActionEvent event) {
+
+		txtResult.clear();
+
+		try {
+
+			int matricola = Integer.parseInt(txtMatricola.getText());
+
+			Studente studente = model.getStudente(matricola);
+			if (studente == null) {
+				txtResult.appendText("Nessun risultato: matricola inesistente");
+				return;
+			}
+
+			List<Corso> corsi = model.cercaCorsiDatoStudente(studente);
+
+			StringBuilder sb = new StringBuilder();
+
+			for (Corso corso : corsi) {
+				sb.append(String.format("%-8s ", corso.getCodins()));
+				sb.append(String.format("%-4s ", corso.getCrediti()));
+				sb.append(String.format("%-45s ", corso.getNome()));
+				sb.append(String.format("%-4s ", corso.getPd()));
+				sb.append("\n");
+			}
+			txtResult.appendText(sb.toString());
+
+		} catch (NumberFormatException e) {
+			txtResult.setText("Inserire una matricola nel formato corretto.");
+		} catch (RuntimeException e) {
+			txtResult.setText("ERRORE DI CONNESSIONE AL DATABASE!");
+		}
+
+    }*/
 
     @FXML
     void doCercaIscritti(ActionEvent event) {
     	txtRisultato.clear();
+    	txtNome.clear();
+    	txtCognome.clear();
     	
     	Corso c=null;
     	
     	try {
     		c=cmbCorsi.getValue();
-    		if(c.getNome()=="") {
+    		if(c.getNome()=="") { //if(c==null)
         		txtRisultato.setText("Selezionare un corso!"); //new Corso("Nessun corso", null, "", null); -->"" e' il nome
         		return;
         	}
+    		
+    		/*List<Studente> studenti = model.studentiIscrittiAlCorso(corso);
+
+			StringBuilder sb = new StringBuilder();
+
+			for (Studente studente : studenti) {
+
+				sb.append(String.format("%-10s ", studente.getMatricola()));
+				sb.append(String.format("%-20s ", studente.getCognome()));
+				sb.append(String.format("%-20s ", studente.getNome()));
+				sb.append(String.format("%-10s ", studente.getCds()));
+				sb.append("\n");
+			}
+
+			txtResult.appendText(sb.toString());
+			*/
     	}catch(NullPointerException npe) {
     		txtRisultato.setText("Selezionare un corso!");
     		return;
@@ -114,8 +168,9 @@ public class FXMLController {
     	
     }
 
-    @FXML
-    void doIscrivi(ActionEvent event) {
+   /* @FXML
+    void doIscrivi(ActionEvent event) { MIO CODICE
+    	txtRisultato.clear();
     	String matricolaString=txtMatricola.getText();
     	Integer matricola = null;
     	Corso c=null;
@@ -154,6 +209,71 @@ public class FXMLController {
     	
     	
     	
+    }*/
+    @FXML
+    void doIscrivi(ActionEvent event) {
+
+    	txtRisultato.clear();
+
+		try {
+
+			if (txtMatricola.getText().isEmpty()) {
+				txtRisultato.setText("Inserire una matricola.");
+				return;
+			}
+
+			if (cmbCorsi.getValue() == null) {
+				txtRisultato.setText("Selezionare un corso.");
+				return;
+			}
+
+			// Prendo la matricola in input
+			int matricola = Integer.parseInt(txtMatricola.getText());
+
+			// mi basterebbe la matricola per fare l'iscrizione ma per completezza 
+			// posso anche far apparire il Nome e Cognome dello studente nell'interfaccia
+			Studente studente = model.getNomeCognome(matricola);
+			if (studente == null) {
+				txtRisultato.appendText("Nessun risultato: matricola inesistente");
+				return;
+			}
+
+			txtNome.setText(studente.getNome());
+			txtCognome.setText(studente.getCognome());
+
+			// Ottengo il nome del corso
+			Corso corso = cmbCorsi.getValue();
+
+			// Controllo se lo studente è già iscritto al corso
+			if (model.isStudenteIscrittoACorso(studente, corso)) {
+				txtRisultato.appendText("Studente già iscritto a questo corso");
+				return;
+			}
+			// Prima di passare a rendere il tasto 'Iscrivi' realmente operativo 
+			// con l'iscrizione, la versione 'Cerca' avrebbe fatto solo il successivo else.
+			//}else {
+			//	txtResult.appendText("Studente non iscritto a questo corso");
+			//	return;
+			//}
+
+			///*
+			// Iscrivo lo studente al corso.
+			// Controllo che l'inserimento vada a buon fine
+			if (!model.inscriviStudenteACorso(studente, corso)) {
+				txtRisultato.appendText("Errore durante l'iscrizione al corso");
+				return;
+			} else {
+				txtRisultato.appendText("Studente iscritto al corso!");
+			}
+			//*/
+
+		} catch (NumberFormatException e) {
+			txtRisultato.setText("Inserire una matricola nel formato corretto.");
+		} catch (RuntimeException e) {
+			txtRisultato.setText("ERRORE DI CONNESSIONE AL DATABASE!");
+		}
+
+
     }
 
     @FXML
@@ -188,9 +308,9 @@ public class FXMLController {
     		return;
     	} 
     	
-    	List<String> studente=this.model.getNomeCognome(matricola);
-    	txtNome.setText(studente.get(0));
-    	txtCognome.setText(studente.get(1));
+    	Studente studente=this.model.getNomeCognome(matricola);
+    	txtNome.setText(studente.getNome());
+    	txtCognome.setText(studente.getCognome());
     	
     }
     

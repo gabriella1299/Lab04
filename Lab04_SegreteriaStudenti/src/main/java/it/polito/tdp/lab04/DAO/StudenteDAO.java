@@ -13,22 +13,54 @@ import it.polito.tdp.lab04.model.Studente;
 
 public class StudenteDAO {
 	
-	public List<String> getNomeCognome(Integer matricola) {
+	/*
+	 * Controllo se uno studente (matricola) è iscritto ad un corso (codins)
+	 */
+	public boolean isStudenteIscrittoACorso(Studente studente, Corso corso) {
+
+		final String sql = "SELECT * FROM iscrizione where codins=? and matricola=?";
+		boolean returnValue = false;
+
+		try {
+			Connection conn = ConnectDB.getConnection();
+			PreparedStatement st = conn.prepareStatement(sql);
+			st.setString(1, corso.getCodins());
+			st.setInt(2, studente.getMatricola());
+
+			ResultSet rs = st.executeQuery();
+
+			if (rs.next())
+				returnValue = true;
+
+			conn.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException("Errore Db");
+		}
+
+		return returnValue;
+	}
+	
+	/*
+	 * Data una matricola ottengo lo studente.
+	 */
+	public Studente getNomeCognome(Integer matricola) {
 		
-		String sql="SELECT Nome,Cognome "
+		String sql="SELECT * "
 				+ "FROM studente "
 				+ "WHERE matricola=?";
 		
-		List<String> result = new ArrayList<String>();
+		Studente studente=null;
 		
 		try {
 			Connection conn=ConnectDB.getConnection();
 			PreparedStatement st=conn.prepareStatement(sql);
 			st.setInt(1, matricola);
 			ResultSet rs=st.executeQuery();
-			rs.next();
-			result.add(rs.getString("nome"));
-			result.add(rs.getString("cognome"));
+			if(rs.next()) {
+				studente=new Studente(matricola, rs.getString("cognome"), rs.getString("nome"), rs.getString("cds"));
+			}
 			rs.close();
 			st.close();
 			conn.close();
@@ -37,10 +69,13 @@ public class StudenteDAO {
 			throw new RuntimeException(e);
 		} 
 		
-		return result;
+		return studente;
 		
 	}
 	
+	/*
+	 * Data una matricola ottengo la lista dei corsi (codins) a cui è iscritto
+	 */
 	public List<Corso> getCorsiPerStudente(Integer matricola){
 		
 		String sql="SELECT c.codins,c.crediti,c.nome,c.pd "
@@ -71,7 +106,10 @@ public class StudenteDAO {
 		return result;
 		
 	}
-
+	
+	/*
+	 * Data una matricola guardo se esiste lo studente.
+	 */
 	public boolean esisteMatricola(Integer matricola) {
 		String sql="SELECT * FROM studente WHERE matricola=?"; 
 		

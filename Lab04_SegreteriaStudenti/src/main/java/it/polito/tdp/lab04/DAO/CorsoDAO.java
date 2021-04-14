@@ -103,7 +103,29 @@ public class CorsoDAO {
 	public boolean inscriviStudenteACorso(Studente studente, Corso corso) {
 		// TODO
 		// ritorna true se l'iscrizione e' avvenuta con successo
-		return false;
+		String sql = "INSERT INTO iscrizione VALUES(?,?)";
+		boolean returnValue = false;
+		
+		try {
+			Connection conn = ConnectDB.getConnection();
+			PreparedStatement st = conn.prepareStatement(sql);
+			st.setInt(1, studente.getMatricola());
+			st.setString(2, corso.getCodins());
+
+			int res = st.executeUpdate();	
+
+			if (res == 1)
+				returnValue = true;
+			
+			st.close();
+			conn.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException("Errore Db", e);
+		}
+
+		return returnValue;
 	}
 
 

@@ -65,5 +65,9 @@ public class Corso {
 	}
 	
 	
+	public int compareTo(Corso corsoInput) {
+		return this.nome.compareTo(corsoInput.nome);
+	}
+	
 	
 }
