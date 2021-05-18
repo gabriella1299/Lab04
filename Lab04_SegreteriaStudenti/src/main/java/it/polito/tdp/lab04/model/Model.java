@@ -77,5 +77,4 @@ public class Model {
 		return corsoDao.inscriviStudenteACorso(studente, corso);
 	}
 
-	
 }
